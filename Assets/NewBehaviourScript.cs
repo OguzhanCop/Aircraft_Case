@@ -16,5 +16,6 @@ public class NewBehaviourScript : MonoBehaviour
         z = plane.GetComponent<JoystickPlayerExample>().z;
         transform.rotation = Quaternion.Euler(90-z, 90, -90);
         
+        
     }
 }

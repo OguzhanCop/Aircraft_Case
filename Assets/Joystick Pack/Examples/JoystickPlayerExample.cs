@@ -24,8 +24,11 @@ public class JoystickPlayerExample : MonoBehaviour
         inputJoystick();
         planeRotate();
         planeMovement();
-        z = transform.eulerAngles.z;
-
+        if (transform.eulerAngles.z > 180)
+            z = transform.eulerAngles.z-360;
+        else
+            z =transform.eulerAngles.z;
+        
     }
     void inputJoystick()
     {
