@@ -10,7 +10,7 @@ public class camera : MonoBehaviour
     public Vector3 offset;
     private void Start()
     {
-        joystick = JoystickPlayerExample.instate;
+       
         offset = transform.position - target.position;
     }
     private void LateUpdate()

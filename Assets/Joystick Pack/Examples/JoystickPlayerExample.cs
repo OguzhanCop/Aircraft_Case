@@ -4,40 +4,49 @@ using UnityEngine;
 
 public class JoystickPlayerExample : MonoBehaviour
 {
-    public static JoystickPlayerExample instate;
-    public float speed;
+   
+    
+    
+    
     public FixedJoystick variableJoystick;
     public Rigidbody rb;
     public float Yaw;
-    private float pitch;
-    private float roll;
-    private float horizontalInput;
-    private float verticalInput;
+    private float rotateX;
+    private float rotateZ;
+    public GameObject de;
+    public float speed;
+    public float z;
+    
 
-    public void FixedUpdate()
-    {
-        //Vector3 direction = Vector3.forward * variableJoystick.Horizontal + Vector3.right * variableJoystick.Vertical;
-        //Vector3 force = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-        //rb.AddRelativeForce(force.x * 10, 0,0);
-        //rb.AddRelativeForce(0,0,2);
-        //gameObject.transform.Rotate(-direction);
-    }
     public void Update()
     {
-        rb.velocity = transform.forward * 24+transform.right*-roll;
-        //transform.position += transform.forward * 50 * Time.deltaTime;
+       
         inputJoystick();
-        
-        Yaw += horizontalInput * 30 * Time.deltaTime+(-roll/100);
-        pitch = pitch - (verticalInput * Time.deltaTime * 30);
-        roll = roll - (horizontalInput * Time.deltaTime * 30);
-        transform.rotation = Quaternion.Euler(Vector3.right * pitch + Vector3.up * Yaw + Vector3.forward * roll*4 );
-        Debug.Log(pitch);
+        planeRotate();
+        planeMovement();
+        z = transform.eulerAngles.z;
+
     }
     void inputJoystick()
     {
-        horizontalInput = variableJoystick.Horizontal;
-        verticalInput = variableJoystick.Vertical;
+        Yaw += variableJoystick.Horizontal * 30 * Time.deltaTime + (-rotateZ * Time.deltaTime) / 5;
+        rotateX = rotateX - (variableJoystick.Vertical * Time.deltaTime * 30);
+        rotateZ = rotateZ - (variableJoystick.Horizontal * Time.deltaTime * 30);
+
+    }
+    void planeRotate()
+    {
+        //transform.rotation = Quaternion.Euler(Vector3.right * rotateX + Vector3.up * Yaw + Vector3.forward * rotateZ * 3);
+        Quaternion a = Quaternion.AngleAxis(rotateZ * 3, Vector3.forward);
+        Quaternion b = Quaternion.AngleAxis(rotateX, Vector3.right);
+        transform.rotation = a * b;
+        transform.Rotate(0, Yaw, 0, Space.World);
+
+    }
+    void planeMovement()
+    {
+        speed = de.GetComponent<Accerelator>().speed;
+        rb.velocity = transform.forward * speed;
 
     }
 
