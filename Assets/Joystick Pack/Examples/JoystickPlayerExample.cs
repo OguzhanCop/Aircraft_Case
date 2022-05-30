@@ -24,11 +24,11 @@ public class JoystickPlayerExample : MonoBehaviour
         inputJoystick();
         planeRotate();
         planeMovement();
-        if (transform.eulerAngles.z > 180)
-            z = transform.eulerAngles.z-360;
-        else
-            z =transform.eulerAngles.z;
-        
+        //if (transform.eulerAngles.z > 180)
+        //    z = transform.eulerAngles.z-360;
+        //else
+        //    z =transform.eulerAngles.z;
+        z = UnityEditor.TransformUtils.GetInspectorRotation(transform).z;
     }
     void inputJoystick()
     {

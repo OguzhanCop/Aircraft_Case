@@ -19,23 +19,27 @@ public class Target : MonoBehaviour
     
     void Update()
     {
-        if (transform.eulerAngles.x > 180)
-            a = transform.eulerAngles.x- 360;
-        else
-           a = transform.eulerAngles.x;
-        if (planeRotation.transform.eulerAngles.x > 180)
-            b = planeRotation.transform.eulerAngles.x - 360;
-        else
-            b = planeRotation.transform.eulerAngles.x;
-        diff = Mathf.Abs(a - b);
-       
-        if (diff < 5 || (183 > diff&&177<diff) )
+        //if (transform.eulerAngles.x > 180)
+        //    a = transform.eulerAngles.x- 360;
+        //else
+        //   a = transform.eulerAngles.x;
+        //if (planeRotation.transform.eulerAngles.x > 180)
+        //    b = planeRotation.transform.eulerAngles.x - 360;
+        //else
+        //    b = planeRotation.transform.eulerAngles.x;
+        a = (UnityEditor.TransformUtils.GetInspectorRotation(transform).x)%360;
+        b = (UnityEditor.TransformUtils.GetInspectorRotation(planeRotation.transform).x)%360;
+        diff = Mathf.Abs( a - b);
+        Debug.Log(diff);
+        if (diff < 185 && diff > 175)
+            diff = Mathf.Abs(180 - diff);
+        if (diff<5 )
         {
             color1.color = Color.green;
         }
         else
             color1.color = Color.red;
-        Debug.Log(UnityEditor.TransformUtils.GetInspectorRotation(transform).x);
+        
         
         
     }
