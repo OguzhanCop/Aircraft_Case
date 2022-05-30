@@ -5,42 +5,67 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     public GameObject planeRotation;
-    public float diff;
+    private float diff;
+    [SerializeField] private int angleTolarence;
+   
+    public float targetAngleX;
+    public float planeAngleX;
     Renderer color;
-    public Material color1;
-    public float a;
-    public float b;
+    Renderer colorChild1;
+    Renderer colorChild2;
     void Start()
     {
-        transform.rotation = Quaternion.Euler(20, 90, -90);
-        color = GetComponent<Renderer>();
+        color = this.GetComponent<Renderer>();
+        colorChild1 = this.transform.GetChild(0).GetComponent<Renderer>();
+        colorChild2 = this.transform.GetChild(1).GetComponent<Renderer>();
     }
 
     
     void Update()
     {
-        //if (transform.eulerAngles.x > 180)
-        //    a = transform.eulerAngles.x- 360;
-        //else
-        //   a = transform.eulerAngles.x;
-        //if (planeRotation.transform.eulerAngles.x > 180)
-        //    b = planeRotation.transform.eulerAngles.x - 360;
-        //else
-        //    b = planeRotation.transform.eulerAngles.x;
-        a = (UnityEditor.TransformUtils.GetInspectorRotation(transform).x)%360;
-        b = (UnityEditor.TransformUtils.GetInspectorRotation(planeRotation.transform).x)%360;
-        diff = Mathf.Abs( a - b);
-        Debug.Log(diff);
-        if (diff < 185 && diff > 175)
-            diff = Mathf.Abs(180 - diff);
-        if (diff<5 )
-        {
-            color1.color = Color.green;
-        }
-        else
-            color1.color = Color.red;
-        
-        
+
+        AngleState();
+        AngleDiff();
+        AngleCheck(angleTolarence);
+       
+    }
+    void AngleState()
+    {
+        targetAngleX = (UnityEditor.TransformUtils.GetInspectorRotation(transform).x) % 360;
+        planeAngleX = (UnityEditor.TransformUtils.GetInspectorRotation(planeRotation.transform).x) % 360;
+
+    }
+    void AngleDiff()
+    {
+        diff = Mathf.Abs(targetAngleX - planeAngleX);
         
     }
+    void AngleCheck(int a)
+    {
+        if (diff < (180+a) && diff >(180-a))
+            diff = Mathf.Abs(180 - diff);
+        if (diff < (360 + a) && diff > (360 - a))
+            diff = Mathf.Abs(360 - diff);
+        if (diff < a)
+        {
+          
+            color.material.color = Color.green;
+            colorChild1.material.color = Color.green;
+            colorChild2.material.color = Color.green;
+
+
+        }
+        else
+        {
+            
+            color.material.color = Color.red;
+            colorChild1.material.color = Color.red;
+            colorChild2.material.color = Color.red;
+        }
+       
+
+    }
+  
+
+
 }

@@ -15,7 +15,7 @@ public class JoystickPlayerExample : MonoBehaviour
     private float rotateZ;
     public GameObject de;
     public float speed;
-    public float z;
+    public float inspectorX;
     
 
     public void Update()
@@ -24,11 +24,8 @@ public class JoystickPlayerExample : MonoBehaviour
         inputJoystick();
         planeRotate();
         planeMovement();
-        //if (transform.eulerAngles.z > 180)
-        //    z = transform.eulerAngles.z-360;
-        //else
-        //    z =transform.eulerAngles.z;
-        z = UnityEditor.TransformUtils.GetInspectorRotation(transform).z;
+
+        inspectorX = UnityEditor.TransformUtils.GetInspectorRotation(transform).z;
     }
     void inputJoystick()
     {
@@ -44,7 +41,7 @@ public class JoystickPlayerExample : MonoBehaviour
         Quaternion b = Quaternion.AngleAxis(rotateX, Vector3.right);
         transform.rotation = a * b;
         transform.Rotate(0, Yaw, 0, Space.World);
-
+        
     }
     void planeMovement()
     {
