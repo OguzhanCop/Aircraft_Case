@@ -12,20 +12,26 @@ public class JoystickPlayerExample : MonoBehaviour
     public Rigidbody rb;
     public float Yaw;
     private float rotateX;
-    private float rotateZ;
-    public GameObject de;
+    public float rotateZ;
+    public GameObject pedal;
     public float speed;
     public float inspectorX;
+    private bool control=false;
     
 
     public void Update()
     {
        
-        inputJoystick();
+        if (speed > 25 || control)
+        {
+            inputJoystick();
+            control = true;
+        }
+       
         planeRotate();
         planeMovement();
 
-        inspectorX = UnityEditor.TransformUtils.GetInspectorRotation(transform).z;
+        //inspectorX = UnityEditor.TransformUtils.GetInspectorRotation(transform).z;
     }
     void inputJoystick()
     {
@@ -45,9 +51,10 @@ public class JoystickPlayerExample : MonoBehaviour
     }
     void planeMovement()
     {
-        speed = de.GetComponent<Accerelator>().speed;
+        speed = pedal.GetComponent<Accerelator>().speed;
         rb.velocity = transform.forward * speed;
 
     }
+    
 
 }
