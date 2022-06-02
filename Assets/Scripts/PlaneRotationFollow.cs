@@ -7,7 +7,7 @@ using Cinemachine;
 
 public class PlaneRotationFollow : MonoBehaviour
 {
-    
+   
     public GameObject plane;
     public float planeInspectorX;
     public List<GameObject> target = new List<GameObject>();
@@ -17,15 +17,16 @@ public class PlaneRotationFollow : MonoBehaviour
     public  GameObject camera2;
     public Transform camera2position;
     public GameObject Button;
+    float rotationX;
 
          
     void Update()
     {
-       
+        rotationX = plane.GetComponent<JoystickPlayerExample>().check;
+        transform.rotation = Quaternion.Euler(90-rotationX, 90, -90);
+
         leaderboard.text = "Score:" + score;
-        planeInspectorX = plane.GetComponent<JoystickPlayerExample>().rotateZ;
-        transform.rotation = Quaternion.Euler(90 - planeInspectorX*3, 90, -90);
-        
+
     }
     private void OnTriggerEnter(Collider other)
     {
