@@ -13,8 +13,13 @@ public class Accerelator : MonoBehaviour
    
     void Update()
     {
+        speedcontrol();
+      
+    }
+    void speedcontrol()
+    {
         speed = Mathf.Lerp(speed, accerelator.value * 50, 0.3f * Time.deltaTime);
-        speedometer.text = "" + (int)speed*4;
+        speedometer.text = "" + (int)speed * 4;
     }
    
 }

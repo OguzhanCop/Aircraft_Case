@@ -21,16 +21,18 @@ public class JoystickPlayerExample : MonoBehaviour
     public void Update()
 
     {
+        speedlimit();
+        planeMovement();
+
+    }
+    void speedlimit()
+    {
         if (speed > 25 || control)
         {
             inputJoystick();
             control = true;
         }
-
-        planeMovement();
-
     }
-
 
     void planeMovement()
     {

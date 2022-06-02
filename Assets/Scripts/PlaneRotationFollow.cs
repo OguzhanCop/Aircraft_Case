@@ -21,13 +21,11 @@ public class PlaneRotationFollow : MonoBehaviour
 
          
     void Update()
-    {
-        rotationX = plane.GetComponent<JoystickPlayerExample>().check;
-        transform.rotation = Quaternion.Euler(90-rotationX, 90, -90);
-
-        leaderboard.text = "Score:" + score;
-
+    {      
+        rotationcheck();
+        scoreboard();
     }
+    
     private void OnTriggerEnter(Collider other)
     {
 
@@ -53,6 +51,16 @@ public class PlaneRotationFollow : MonoBehaviour
 
             }      
         }             
+    }
+    void scoreboard()
+    {
+        leaderboard.text = "Score:" + score;
+    }
+    void rotationcheck()
+    {
+        rotationX = plane.GetComponent<JoystickPlayerExample>().check;
+        transform.rotation = Quaternion.Euler(90 - rotationX, 90, -90);
+
     }
     public void restart()
     {        
